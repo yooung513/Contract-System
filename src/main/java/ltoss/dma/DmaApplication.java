@@ -12,7 +12,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 @Import({PriceConfig.class, ExchangeRateConfig.class})
 @EnableJpaAuditing
 public class DmaApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(DmaApplication.class, args);
 	}

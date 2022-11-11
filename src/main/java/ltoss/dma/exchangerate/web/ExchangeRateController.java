@@ -1,8 +1,8 @@
-package ltoss.dma.web;
+package ltoss.dma.exchangerate.web;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import ltoss.dma.service.ExchangeRateService;
+import ltoss.dma.exchangerate.service.ExchangeRateService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
