@@ -1,9 +1,9 @@
-package ltoss.dma.service;
+package ltoss.dma.exchangerate.service;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import ltoss.dma.domain.ExchangeRate;
-import ltoss.dma.repository.ExchangeRateRepository;
+import ltoss.dma.exchangerate.domain.ExchangeRate;
+import ltoss.dma.exchangerate.repository.ExchangeRateRepository;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
