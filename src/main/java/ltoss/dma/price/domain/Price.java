@@ -20,8 +20,8 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "price",
         uniqueConstraints = {
-                @UniqueConstraint(columnNames = {"date"}),
-                @UniqueConstraint(columnNames = {"mat_code"})
+                @UniqueConstraint(columnNames = {"date","mat_code"})
+
         })
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
