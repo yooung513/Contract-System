@@ -4,7 +4,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import ltoss.dma.price.domain.Price;
 import ltoss.dma.price.service.PriceService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -14,9 +18,14 @@ public class PriceController {
     private final PriceService priceService;
 
     @PostMapping("/price")
-    public String save(@RequestBody Price price) {
+    public ResponseEntity<HttpStatus> save(@RequestBody Price price) {
         priceService.save(price);
-        return "ok";
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping  ("/price/find")
+    public List<Price> findAll(){
+        return priceService.findAll();
     }
 
 
