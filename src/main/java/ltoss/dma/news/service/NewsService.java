@@ -12,6 +12,7 @@ public class NewsService {
     private NewsRepository newsRepository;
 
     public void insert(News news) {
+        news.setReg_code("hehe");
         newsRepository.save(news);
     }
 }

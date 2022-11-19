@@ -9,19 +9,19 @@ import javax.persistence.*;
 
 @Setter
 @Getter
-@Entity(name = "refresh_token")
+@Entity(name = "refreshtoken")
 public class RefreshToken {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
 
     @OneToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
     @Column(nullable = false, unique = true)
     private String token;
 
-    @Column(nullable = false, name = "expiry_date")
+    @Column(nullable = false)
     private Instant expiryDate;
 }
