@@ -1,4 +1,5 @@
 package ltoss.dma.login.controller;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -7,9 +8,11 @@ import java.util.stream.Collectors;
 import javax.validation.Valid;
 
 import ltoss.dma.login.exception.TokenRefreshException;
-import ltoss.dma.login.models.RefreshToken;
+import ltoss.dma.login.models.*;
 import ltoss.dma.login.payload.request.TokenRefreshRequest;
 import ltoss.dma.login.payload.response.TokenRefreshResponse;
+import ltoss.dma.login.repository.PrivilegeRepository;
+import ltoss.dma.login.repository.UserPrivilegeRepository;
 import ltoss.dma.login.security.services.RefreshTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,14 +27,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import ltoss.dma.login.models.ERole;
-import ltoss.dma.login.models.Role;
-import ltoss.dma.login.models.User;
 import ltoss.dma.login.payload.request.LoginRequest;
 import ltoss.dma.login.payload.request.SignupRequest;
 import ltoss.dma.login.payload.response.JwtResponse;
 import ltoss.dma.login.payload.response.MessageResponse;
-import ltoss.dma.login.repository.RoleRepository;
 import ltoss.dma.login.repository.UserRepository;
 import ltoss.dma.login.security.jwt.JwtUtils;
 import ltoss.dma.login.security.services.UserDetailsImpl;
@@ -41,22 +40,25 @@ import ltoss.dma.login.security.services.UserDetailsImpl;
 @RequestMapping("/api/auth")
 public class AuthController {
     @Autowired
-    AuthenticationManager authenticationManager;
+    private AuthenticationManager authenticationManager;
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    RoleRepository roleRepository;
+    private UserPrivilegeRepository userPrivilegeRepository;
 
     @Autowired
-    PasswordEncoder encoder;
+    private PrivilegeRepository privilegeRepository;
 
     @Autowired
-    JwtUtils jwtUtils;
+    private PasswordEncoder encoder;
 
     @Autowired
-    RefreshTokenService refreshTokenService;
+    private JwtUtils jwtUtils;
+
+    @Autowired
+    private RefreshTokenService refreshTokenService;
 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
@@ -74,6 +76,8 @@ public class AuthController {
                 .collect(Collectors.toList());
 
         RefreshToken refreshToken = refreshTokenService.createRefreshToken(userDetails.getId());
+
+        userRepository.setLastLoginForUser(LocalDateTime.now(), loginRequest.getUsername());
 
         return ResponseEntity.ok(new JwtResponse(jwt, refreshToken.getToken(), userDetails.getId(),
                 userDetails.getUsername(), userDetails.getEmail(), roles));
@@ -95,41 +99,42 @@ public class AuthController {
 
         // Create new user's account
         User user = new User(signUpRequest.getUsername(),
-                signUpRequest.getEmail(),
-                encoder.encode(signUpRequest.getPassword()));
+                encoder.encode(signUpRequest.getPassword()),
+                signUpRequest.getName(),
+                signUpRequest.getPosition(),
+                signUpRequest.getTel(),
+                signUpRequest.getEmail()
+                );
+
+        userRepository.save(user);
 
         Set<String> strRoles = signUpRequest.getRole();
-        Set<Role> roles = new HashSet<>();
 
         if (strRoles == null) {
-            Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+            Privilege userRole = privilegeRepository.findByPrivilegeName(ERole.ROLE_USER)
                     .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-            roles.add(userRole);
+            userPrivilegeRepository.save(new UserPrivilege(user, userRole));
         } else {
             strRoles.forEach(role -> {
                 switch (role) {
                     case "admin":
-                        Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
+                        Privilege adminRole = privilegeRepository.findByPrivilegeName(ERole.ROLE_ADMIN)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                        roles.add(adminRole);
-
+                        userPrivilegeRepository.save(new UserPrivilege(user, adminRole));
                         break;
                     case "mod":
-                        Role modRole = roleRepository.findByName(ERole.ROLE_MODERATOR)
+                        Privilege modRole = privilegeRepository.findByPrivilegeName(ERole.ROLE_MODERATOR)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                        roles.add(modRole);
+                        userPrivilegeRepository.save(new UserPrivilege(user, modRole));
 
                         break;
                     default:
-                        Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+                        Privilege userRole = privilegeRepository.findByPrivilegeName(ERole.ROLE_USER)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                        roles.add(userRole);
+                        userPrivilegeRepository.save(new UserPrivilege(user, userRole));
                 }
             });
         }
-
-        user.setRoles(roles);
-        userRepository.save(user);
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }

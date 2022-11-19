@@ -2,8 +2,13 @@ package ltoss.dma.login.repository;
 
 import ltoss.dma.login.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Repository
@@ -13,4 +18,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Boolean existsByUsername(String username);
 
     Boolean existsByEmail(String email);
+
+    @Transactional
+    @Modifying
+    @Query(value = "update user ui set ui.last_login = :last_login where ui.username = :username", nativeQuery = true)
+    int setLastLoginForUser(@Param("last_login") LocalDateTime last_login, @Param("username") String username);
 }
