@@ -42,7 +42,7 @@ public class NewsController {
     }
     //조회
     @GetMapping(value = "news/{mat_code}")
-        public ResponseEntity<?> find(@PathVariable String mat_code) {
+        public ResponseEntity<?> find (@PathVariable String mat_code) {
 
         List<News> news = newsService.findByMatCode(mat_code);
 
