@@ -1,2 +1,4 @@
-package ltoss.dma.contract.domain;public class contract {
+package ltoss.dma.contract.domain;
+
+public class Contract {
 }

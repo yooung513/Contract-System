@@ -68,7 +68,7 @@ public class User extends AuditingEntity {
 
 
     @JsonIgnore
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private Set<UserPrivilege> userPrivilege = new HashSet<>();
 
     @Column(name = "last_login", insertable = false)

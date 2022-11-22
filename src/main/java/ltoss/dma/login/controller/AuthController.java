@@ -136,7 +136,7 @@ public class AuthController {
             });
         }
 
-        return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+        return ResponseEntity.ok(new MessageResponse("인사 등록 처리를 성공적으로 완료했습니다."));
     }
 
     @PostMapping("/refreshtoken")

@@ -23,4 +23,20 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Modifying
     @Query(value = "update user ui set ui.last_login = :last_login where ui.username = :username", nativeQuery = true)
     int setLastLoginForUser(@Param("last_login") LocalDateTime last_login, @Param("username") String username);
+
+    @Modifying
+    @Query(value = "update user ui" +
+            "   set ui.name = :name" +
+            "     , ui.position = :position" +
+            "     , ui.tel = :tel" +
+            "     , ui.email = :email" +
+            " where ui.user_id = :user_id", nativeQuery = true)
+    int updateUser(@Param("name") String name,
+                   @Param("position") String position,
+                   @Param("tel") String tel,
+                   @Param("email") String email,
+                   @Param("user_id") Long user_id
+    );
+
+    void deleteByUsername(String username);
 }
