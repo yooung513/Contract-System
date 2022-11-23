@@ -4,28 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import ltoss.dma.news.domain.News;
 import ltoss.dma.news.service.NewsService;
-<<<<<<< HEAD
-import org.apache.catalina.Service;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletResponse;
-import java.security.Key;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-=======
 import org.springframework.http.HttpMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
->>>>>>> 795b234a59d2ec2644f4ab6e427e1c8d82e996dd
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -34,14 +18,8 @@ public class NewsController {
 
     private final NewsService newsService;
 
-<<<<<<< HEAD
-    //저장
-    @PostMapping("/news/copper")
-    public String saveCopperInfo(@RequestBody News[] news){
-=======
     @PostMapping("/news/save")
     public ResponseEntity<?> saveCopperInfo(@RequestBody News[] news){
->>>>>>> 795b234a59d2ec2644f4ab6e427e1c8d82e996dd
         for(News _news: news) {
             log.debug("date = {}", _news.getDate());
             log.debug("mat_code = {}", _news.getMatCode());
@@ -53,6 +31,8 @@ public class NewsController {
         }
         return new ResponseEntity<>("ok", HttpStatus.OK);
     }
+
+
     //조회
     @GetMapping(value = "news/{mat_code}")
         public ResponseEntity<?> find (@PathVariable String mat_code) {
@@ -64,9 +44,6 @@ public class NewsController {
     }
 
     //수정
-
-
-
 
 
 }
