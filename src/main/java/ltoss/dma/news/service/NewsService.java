@@ -16,7 +16,9 @@ public class NewsService {
     private NewsRepository newsRepository;
 
     public void insert(News news) {
+
         news.setRegCode("hehe");
+
         newsRepository.save(news);
     }
   //  public List<News> findByMatCode(String mat_code) {

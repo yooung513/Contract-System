@@ -4,17 +4,19 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import ltoss.dma.dept.domain.Dept;
-import ltoss.dma.login.models.UserPrivilege;
-
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+import java.util.Set;
 
 @Getter
 @Setter
-public class SignupRequest {
+public class UpdateRequest {
+    @NotBlank
+    private Long userId;
+
     @NotBlank
     @Size(min = 3, max = 20)
     private String username;
@@ -23,11 +25,6 @@ public class SignupRequest {
     @Size(max = 50)
     @Email
     private String email;
-
-    @NotBlank
-    @Size(min = 6, max = 40)
-    private String password;
-
 
     @NotBlank
     @Size(max = 45)

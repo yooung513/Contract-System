@@ -1,29 +1,22 @@
 package ltoss.dma.price.repository;
 
-import com.querydsl.jpa.impl.JPAQueryFactory;
 import ltoss.dma.price.domain.Price;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.persistence.EntityManager;
+import java.time.LocalDate;
+import java.util.List;
 
 
-@Repository
-@Transactional
-public class JpaPriceRepository {
+public interface JpaPriceRepository extends JpaRepository<Price, Long> {
 
-    private final EntityManager em;
-    private final JPAQueryFactory query;
+    List<Price> findByDateBetween(
+            @RequestParam("startDate")
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)LocalDate sDate,
+            @RequestParam("endDate")
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)LocalDate eDate);
 
-    public JpaPriceRepository(EntityManager em) {
-        this.em = em;
-        this.query = new JPAQueryFactory(em);
-    }
-
-    public Price save(Price price) {
-        em.persist(price);
-        return price;
-    }
 }
 
 //    try {
