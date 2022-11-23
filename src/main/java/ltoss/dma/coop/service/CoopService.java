@@ -29,7 +29,7 @@ public class CoopService {
         jpaCoopRepository.save(coop);
     }
     public void deleteCoop(Coop coop){
-        jpaCoopRepository.deleteById(coop.getCoop_id());
+        jpaCoopRepository.deleteById(Integer.parseInt(coop.getCoop_id().toString()));
 
     }
 

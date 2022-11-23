@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-package ltoss.dma.contract.web;public class ContractController {
-}
-=======
 package ltoss.dma.contract.web;
 
 import lombok.AllArgsConstructor;
@@ -94,4 +90,3 @@ public class ContractController {
         return contractService.findAll(spec);
     }
 }
->>>>>>> origin/main

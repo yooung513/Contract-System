@@ -19,7 +19,7 @@ public class NewsController {
     public String saveCopperInfo(@RequestBody News[] news){
         for(News _news: news) {
             log.debug("date = {}", _news.getDate());
-            log.debug("mat_code = {}", _news.getMat_code());
+            log.debug("mat_code = {}", _news.getMatCode());
             log.debug("contents = {}", _news.getContents());
             log.debug("title = {}", _news.getTitle());
             log.debug("news = {}", _news);

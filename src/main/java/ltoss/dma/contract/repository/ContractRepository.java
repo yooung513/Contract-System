@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-package ltoss.dma.contract.repository;public interface ContractRepository {
-}
-=======
 package ltoss.dma.contract.repository;
 
 import ltoss.dma.contract.domain.Contract;
@@ -14,4 +10,3 @@ import java.util.List;
 public interface ContractRepository extends JpaRepository<Contract, Integer>, JpaSpecificationExecutor<Contract> {
     List<Contract> findAll(Specification spec);
 }
->>>>>>> origin/main
