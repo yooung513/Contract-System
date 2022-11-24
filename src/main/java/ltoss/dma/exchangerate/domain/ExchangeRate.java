@@ -5,16 +5,17 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
 @Data
 @Getter
 @NoArgsConstructor
+@Table(name = "exchange_rate",
+       uniqueConstraints = {
+           @UniqueConstraint(columnNames = {"cur_date", "cur_unit"})
+        })
 public class ExchangeRate {
 
     /**
@@ -34,6 +35,7 @@ public class ExchangeRate {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
     private Long result;
+    @Column(name = "cur_unit")
     private String curUnit;
     private String curNm;
     private String ttb;
@@ -44,6 +46,7 @@ public class ExchangeRate {
     private String tenDdEfeeR;
     private String kftcDealBasR;
     private String kftcBkpr;
+    @Column(name = "cur_date")
     private LocalDate curDate;
 
     @Builder

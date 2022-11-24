@@ -17,10 +17,10 @@ public class News {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "news_id")
-    private Integer news_id;
+    private Integer newsId;
 
     @Column(name = "mat_code")
-    private String mat_code;
+    private String matCode;
 
     @Column(name = "date")
     private LocalDate date;
@@ -35,13 +35,13 @@ public class News {
     private String contents;
 
     @Column(name = "reg_code", length = 5)
-    private String reg_code;
+    private String regCode;
 
     @Column(name = "register")
     private String register;
 
     @CreatedDate
     @Column(name = "reg_date", updatable = false)
-    private LocalDateTime reg_date;
+    private LocalDateTime regDate;
 
 }

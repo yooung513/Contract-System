@@ -22,9 +22,6 @@ public class Coop implements Serializable {
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private Integer coop_id;
 
-    @Column(name = "mat_code", length = 5)
-    private String mat_code;
-
     @Column(name = "coop_name", length = 45)
     private String coop_name;
 
