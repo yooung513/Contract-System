@@ -2,21 +2,16 @@ package ltoss.dma.contract.domain;
 
 import lombok.Data;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import ltoss.dma.coop.domain.Coop;
+import ltoss.dma.login.models.User;
+import ltoss.dma.price.domain.Price;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 import java.math.BigDecimal;
-import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -36,11 +31,15 @@ public class Contract {
     @Column(name = "cont_code", length = 20)
     private String cont_code;
 
-    @Column(name = "user_id")
-    private Long user_id;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+//    @Column(name = "user_id")
+    private User user_id;
 
-    @Column(name = "coop_id")
-    private Integer coop_id;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "coop_id")
+//    @Column(name = "coop_id")
+    private Coop coop_id;
 
     @Column(name = "cont_price", precision = 10, scale = 2)
     private BigDecimal cont_price;
@@ -77,7 +76,8 @@ public class Contract {
     @Column(name = "editdate", updatable = true)
     private LocalDateTime editdate;
 
-    @Column(name= "price_id")
-    private Integer price_id;
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "price_id")
+//    @Column(name= "price_id")
+    private Price price_id;
 }
