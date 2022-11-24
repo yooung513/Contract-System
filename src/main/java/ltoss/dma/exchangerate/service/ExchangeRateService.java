@@ -15,6 +15,7 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -22,6 +23,16 @@ import java.time.format.DateTimeFormatter;
 public class ExchangeRateService {
 
     private ExchangeRateRepository exchangeRateRepository;
+
+    /**
+     * 날짜에 해당하는 값이 없으면 true 있으면 false
+     * @param date
+     * @return
+     */
+    public boolean isItSaved(String date){
+        LocalDate curDate = LocalDate.parse(date, DateTimeFormatter.ISO_DATE);
+        return exchangeRateRepository.findByCurDate(curDate).isEmpty();
+    }
 
     public boolean loadJson(String date) {
         log.debug("date={}", date);
@@ -56,6 +67,12 @@ public class ExchangeRateService {
                          * kftc_deal_bas_r: String // 서울외국환중개매매기준율
                          * kftc_bkpr: String // 서울외국환중개장부가격
                          */
+                        if (tmp.get("result") == null) {
+                            return false;
+                        } else if (tmp.get("bkpr") == null) {
+                            return false;
+                        }
+
                         ExchangeRate infoObj = ExchangeRate.builder()
                                 .result((Long) tmp.get("result"))
                                 .curUnit((String) tmp.get("cur_unit"))
@@ -97,5 +114,9 @@ public class ExchangeRateService {
 
     public void insert(ExchangeRate exchangeRate) {
         exchangeRateRepository.save(exchangeRate);
+    }
+
+    public List<ExchangeRate> findAll() {
+        return exchangeRateRepository.findAll();
     }
 }
