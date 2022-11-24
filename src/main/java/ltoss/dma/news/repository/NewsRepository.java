@@ -19,8 +19,8 @@ import java.util.Optional;
 @Repository
 public interface NewsRepository extends JpaRepository<News, Integer>{
 
-  //  static List<News> findAllByMatCode(String matCode) {
-   // }
+    //  static List<News> findAllByMatCode(String matCode) {
+    // }
 
     List<News> findAllByMatCode(String matCode);
 
