@@ -1,53 +1,44 @@
 package ltoss.dma.coop.web;
 
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import ltoss.dma.code.domain.Code;
-import ltoss.dma.contract.domain.Contract;
 import ltoss.dma.coop.domain.Coop;
+import ltoss.dma.coop.repository.JpaCoopRepository;
 import ltoss.dma.coop.service.CoopService;
-import ltoss.dma.login.payload.response.MessageResponse;
+import ltoss.dma.news.domain.News;
+import ltoss.dma.news.service.NewsService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Slf4j
-@CrossOrigin(origins = "*")
 @RestController
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class CoopController {
 
     private final CoopService coopService;
 
-    @PostMapping("/coop")
-    @Transactional
-    public ResponseEntity<?> save(@RequestBody Coop coop) {
-        coopService.save(coop);
-        return ResponseEntity.ok(new MessageResponse(
-                coop.getCoop_name() + " 협력사 등록 완료"));
+    @PostMapping("/coop/find")
+    public List<Coop> findAll(){
+        return  coopService.findAll();
     }
 
-    @GetMapping("/coop")
-    public ResponseEntity<?> findAll(){
-        List<Coop> coop = coopService.findAll();
-        return ResponseEntity.ok(coop);
+    @PostMapping("/coop/insert")
+    public ResponseEntity<HttpStatus> save (@RequestBody Coop Coops){
+        coopService.insert(Coops);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PatchMapping("/coop")
-    @Transactional
-    public ResponseEntity<?> updateCoop(@RequestBody Coop coop) {
-        coopService.updateCoop(coop);
-        return ResponseEntity.ok(new MessageResponse(
-                coop.getCoop_name() + " 협력사 정보 수정 완료"));
+    @PostMapping("/coop/insert/update")
+    public String updateCoopInfo(@RequestBody Coop coops){
+        coopService.update(coops);
+        return "ok";
     }
-
-    @DeleteMapping("/coop/{coop_id}")
-    @Transactional
-    public ResponseEntity<?> deleteById(@PathVariable("coop_id") Integer coop_id) {
-        coopService.deleteById(coop_id);
-        return ResponseEntity.ok
-                (new MessageResponse(coop_id + " 번 협력사 삭제 완료"));
+    @DeleteMapping("/coop")
+    public ResponseEntity<HttpStatus> deleteCoopInfo(@RequestBody Coop coops){
+        coopService.deleteCoop(coops);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

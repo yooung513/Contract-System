@@ -1,29 +1,36 @@
 package ltoss.dma.coop.service;
 
-import lombok.RequiredArgsConstructor;
-import ltoss.dma.code.domain.Code;
-import ltoss.dma.contract.domain.Contract;
+import lombok.AllArgsConstructor;
 import ltoss.dma.coop.domain.Coop;
-import ltoss.dma.coop.repository.CoopRepository;
+import ltoss.dma.coop.repository.JpaCoopRepository;
+import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.Id;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 @Transactional
-@RequiredArgsConstructor
 public class CoopService {
 
-    private final CoopRepository coopRepository;
+    private final JpaCoopRepository jpaCoopRepository;
 
-    public void save(Coop coop) { coopRepository.save(coop); }
+    public List<Coop> findAll(){
+        return  jpaCoopRepository.findAll();
+    }
+    public void insert(Coop coop){
+        jpaCoopRepository.save(coop);
 
-    public List<Coop> findAll() { return coopRepository.findAll(); }
+    }
+    public void update(Coop coop){
+        jpaCoopRepository.save(coop);
+    }
+    public void deleteCoop(Coop coop){
+        jpaCoopRepository.deleteById(Integer.parseInt(coop.getCoop_id().toString()));
 
-    public void updateCoop(Coop coop) { coopRepository.save(coop); }
-
-    public void deleteById(Integer coop_id) { coopRepository.deleteById(coop_id); }
-
+    }
 
 }
