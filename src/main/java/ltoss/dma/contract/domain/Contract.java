@@ -37,7 +37,7 @@ public class Contract {
     private String cont_code;
 
     @Column(name = "user_id")
-    private Integer user_id;
+    private Long user_id;
 
     @Column(name = "coop_id")
     private Integer coop_id;
@@ -71,7 +71,7 @@ public class Contract {
     private String remark;
 
     @Column(name = "editor")
-    private Integer editor;
+    private Long editor;
 
     @CreatedDate
     @Column(name = "editdate", updatable = true)
