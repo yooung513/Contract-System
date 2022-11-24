@@ -1,5 +1,6 @@
 package ltoss.dma.contract.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.Getter;
 import ltoss.dma.coop.domain.Coop;
@@ -33,10 +34,12 @@ public class Contract {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "coop_id")
+    @JsonIgnore
     private Coop coop;
 
     @Column(name = "cont_price", precision = 10, scale = 2)
@@ -76,5 +79,6 @@ public class Contract {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "price_id")
+    @JsonIgnore
     private Price price;
 }
