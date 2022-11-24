@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import ltoss.dma.contract.domain.Contract;
 import ltoss.dma.dept.domain.Dept;
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.annotation.CreatedDate;
@@ -73,6 +74,11 @@ public class User extends AuditingEntity {
 
     @Column(name = "last_login", insertable = false)
     private LocalDateTime lastLogin;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
+    private Set<Contract> contracts = new HashSet<>();
+
 
     public User(String username, String password, String name, String position, String tel, String email) {
         this.username = username;

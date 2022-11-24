@@ -33,13 +33,11 @@ public class Contract {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-//    @Column(name = "user_id")
-    private User user_id;
+    private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "coop_id")
-//    @Column(name = "coop_id")
-    private Coop coop_id;
+    private Coop coop;
 
     @Column(name = "cont_price", precision = 10, scale = 2)
     private BigDecimal cont_price;
@@ -78,6 +76,5 @@ public class Contract {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "price_id")
-//    @Column(name= "price_id")
-    private Price price_id;
+    private Price price;
 }

@@ -1,9 +1,11 @@
 package ltoss.dma.price.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import ltoss.dma.contract.domain.Contract;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -12,6 +14,8 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @NoArgsConstructor
@@ -21,7 +25,6 @@ import java.time.LocalDateTime;
 @Table(name = "price",
         uniqueConstraints = {
                 @UniqueConstraint(columnNames = {"date","mat_code"})
-
         })
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
@@ -70,4 +73,8 @@ public class Price implements Serializable {
     @CreatedDate
     @Column(name = "reg_date", updatable = false)
     private LocalDateTime reg_date;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "price", cascade = CascadeType.PERSIST)
+    private Set<Contract> contracts = new HashSet<>();
 }
