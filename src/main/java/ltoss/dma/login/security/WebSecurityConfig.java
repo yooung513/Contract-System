@@ -105,6 +105,8 @@ public class WebSecurityConfig /*extends WebSecurityConfigurerAdapter*/ { // 1st
                 .antMatchers("/news/**").permitAll()
                 .antMatchers("/user/**").permitAll()
                 .antMatchers("/price/**").permitAll()
+                .antMatchers("/contract/**").permitAll()
+                .antMatchers("/coop/**").permitAll()
                 .anyRequest().authenticated();
 
         http.authenticationProvider(authenticationProvider());
