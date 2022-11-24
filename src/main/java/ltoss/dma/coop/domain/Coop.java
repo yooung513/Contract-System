@@ -21,9 +21,6 @@ public class Coop implements Serializable {
     @Column(name = "coop_id")
     private Integer coop_id;
 
-    @Column(name = "mat_code")
-    private String mat_code;
-
     @Column(name = "coop_name" , length = 45)
     private String coop_name;
 
