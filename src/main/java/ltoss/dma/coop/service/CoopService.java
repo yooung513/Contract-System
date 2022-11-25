@@ -21,16 +21,12 @@ public class CoopService {
     public List<Coop> findAll(){
         return  jpaCoopRepository.findAll();
     }
-    public void insert(Coop coop){
-        jpaCoopRepository.save(coop);
 
-    }
-    public void update(Coop coop){
+    public void save(Coop coop){
         jpaCoopRepository.save(coop);
     }
-    public void deleteCoop(Coop coop){
-        jpaCoopRepository.deleteById(Integer.parseInt(coop.getCoop_id().toString()));
 
+    public void deleteById(Integer coop_id){
+        jpaCoopRepository.deleteById(coop_id);
     }
-
 }
