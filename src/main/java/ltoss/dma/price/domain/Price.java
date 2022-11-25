@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import ltoss.dma.contract.domain.Contract;
+import ltoss.dma.price.repository.JpaPriceDto;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -18,6 +19,19 @@ import java.util.HashSet;
 import java.util.Set;
 
 
+@SqlResultSetMapping(//* Dto 에서 조회할 엔티티 항목들 맵핑 작업//
+        name = "PriceForGraph",
+        classes = {
+                @ConstructorResult(
+                        targetClass = JpaPriceDto.class,
+                        columns = {
+                                @ColumnResult(name = "price", type = BigDecimal.class),
+                                @ColumnResult(name = "date", type = LocalDate.class),
+                                @ColumnResult(name = "matCode", type = String.class)
+                        }
+                )
+        }
+)
 @NoArgsConstructor
 @Getter
 @Data

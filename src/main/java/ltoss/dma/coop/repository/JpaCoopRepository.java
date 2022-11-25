@@ -5,5 +5,4 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface JpaCoopRepository extends JpaRepository<Coop, Integer> {
 
-
 }
