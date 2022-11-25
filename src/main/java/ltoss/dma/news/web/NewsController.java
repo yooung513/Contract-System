@@ -7,16 +7,12 @@ import ltoss.dma.login.payload.response.MessageResponse;
 import ltoss.dma.news.domain.News;
 import ltoss.dma.news.repository.NewsRepository;
 import ltoss.dma.news.service.NewsService;
-import ltoss.dma.news.service.NewsUpdateRequest;
-import org.apache.juli.logging.Log;
-import org.springframework.data.repository.query.Param;
+import ltoss.dma.news.payload.NewsUpdateRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-import java.time.LocalDateTime;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+
 import java.util.List;
 import java.util.Optional;
 
