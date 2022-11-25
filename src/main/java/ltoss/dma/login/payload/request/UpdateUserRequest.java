@@ -13,7 +13,7 @@ import java.util.Set;
 
 @Getter
 @Setter
-public class UpdateRequest {
+public class UpdateUserRequest {
     @NotBlank
     private Long userId;
 
