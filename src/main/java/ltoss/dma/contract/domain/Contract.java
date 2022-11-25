@@ -1,9 +1,13 @@
 package ltoss.dma.contract.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import ltoss.dma.coop.domain.Coop;
+import ltoss.dma.login.models.User;
+import ltoss.dma.price.domain.Price;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -64,12 +68,20 @@ public class Contract implements Serializable {
     @Column(name = "editdate", updatable = false)
     private LocalDateTime editdate;
 
-    @Column(name = "user_id", length = 20)
-    private Long user_id;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    @Column(name = "coop_id", length = 10)
-    private Integer coop_id;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    @JoinColumn(name = "price_id")
+    private Price price;
 
-    @Column(name = "price_id", length = 10)
-    private Integer price_id;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    @JoinColumn(name = "coop_id")
+    private Coop coop;
+
+
 }
