@@ -108,6 +108,8 @@ public class WebSecurityConfig /*extends WebSecurityConfigurerAdapter*/ { // 1st
                 .antMatchers("/coop/**").permitAll()
                 .antMatchers("/menu/**").permitAll()
                 .antMatchers("/privilegemenu/**").permitAll()
+                .antMatchers("/code/**").permitAll()
+                .antMatchers("/dashboard/**").permitAll()
                 .anyRequest().authenticated();
 
         http.authenticationProvider(authenticationProvider());

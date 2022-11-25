@@ -1,92 +1,76 @@
 package ltoss.dma.contract.web;
 
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import ltoss.dma.contract.domain.Contract;
-import ltoss.dma.contract.domain.ContractSpecification;
+import ltoss.dma.contract.payload.UpdateRequest;
+import ltoss.dma.contract.repository.ContractRepository;
 import ltoss.dma.contract.service.ContractService;
-import org.springframework.data.jpa.domain.Specification;
-import org.springframework.format.annotation.DateTimeFormat;
+import ltoss.dma.login.payload.response.MessageResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
+import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
+@CrossOrigin(origins = "*")
 @RestController
-@AllArgsConstructor
-//@RequiredArgsConstructor
+@RequiredArgsConstructor
 public class ContractController {
 
     private final ContractService contractService;
 
+    private final ContractRepository contractRepository;
+
     @PostMapping("/contract")
-    public ResponseEntity<HttpStatus> save (@RequestBody Contract contract){
+    @Transactional
+    public ResponseEntity<?> save(@RequestBody Contract contract) {
         contractService.save(contract);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return ResponseEntity.ok(new MessageResponse(
+                contract.getCont_code() + " 계약 등록 완료"));
     }
 
     @GetMapping("/contract")
-    public List<Contract> findAll(){
-        return contractService.findAll();
+    public ResponseEntity<?> findAll(){
+        List<Contract> contract = contractService.findAll();
+        return ResponseEntity.ok(contract);
     }
 
-    @PutMapping("/contract")
-    public ResponseEntity<HttpStatus> update (@RequestBody Contract contract) {
-        contractService.update(contract);
-        return new ResponseEntity<>(HttpStatus.OK);
+    @PatchMapping("/contract/{cont_id}")
+    @Transactional
+    public ResponseEntity<?> updateContract(@RequestBody UpdateRequest updateRequest) {
+        Optional<Contract> contract = contractRepository.findById(updateRequest.getCont_id());
+        if (contract.isEmpty()) {
+            return new ResponseEntity<>("해당 계약건을 찾을 수 없습니다. 목록을 새로고침 후 다시 시도해주세요", HttpStatus.BAD_REQUEST);
+        }
+
+        contractRepository.updateContract(
+                updateRequest.getCont_id(),
+                updateRequest.getCont_code(),
+                updateRequest.getCont_price(),
+                updateRequest.getCont_quantity(),
+                updateRequest.getCont_date(),
+                updateRequest.getCont_enddate(),
+                updateRequest.getCont_status(),
+                updateRequest.getMat_code(),
+                updateRequest.getRemark(),
+                updateRequest.getUser_id(),
+                updateRequest.getCoop_id(),
+                updateRequest.getPrice_id()
+        );
+        return ResponseEntity.ok(new MessageResponse(
+                updateRequest.getCont_id() + " 번 계약 정보 수정 완료"));
     }
 
-    @DeleteMapping("/contract")
-    public ResponseEntity<HttpStatus> delete (@RequestBody Contract contract) {
-        contractService.delete(contract);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
 
-    @GetMapping("/contract/spec")
-    public List<Contract> findAll (@RequestParam(required = false) String mat_code,
-                                   @RequestParam(required = false) String cont_code,
-                                   @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startdate,
-                                   @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)LocalDate enddate,
-                                   @RequestParam(required = false) Integer cont_id,
-                                   @RequestParam(required = false) Integer user_id,
-                                   @RequestParam(required = false) String cont_status,
-                                   @RequestParam(required = false) BigDecimal min_price,
-                                   @RequestParam(required = false) BigDecimal max_price) {
-
-//        Specification<Contract> spec = Specification.where(ContractSpecification.equalMat(mat_code));
-        Specification<Contract> spec = (root, query, criteriaBuilder) -> null;
-
-        if (mat_code != null) {
-            spec = spec.and(ContractSpecification.equalMat(mat_code));
-        }
-        if (cont_code != null) {
-            spec = spec.and(ContractSpecification.likeContName(cont_code));
-        }
-        if (startdate != null && enddate != null) {
-            spec = spec.and(ContractSpecification.betweenDate(startdate, enddate));
-        }
-        if (cont_id != null) {
-            spec = spec.and(ContractSpecification.equalContId(cont_id));
-        }
-        if (user_id != null) {
-            spec = spec.and(ContractSpecification.equalUserId(user_id));
-        }
-        if (cont_status != null) {
-            spec = spec.and(ContractSpecification.equalContStatus(cont_status));
-        }
-        if (min_price != null) {
-            spec = spec.and(ContractSpecification.greaterPrice(min_price));
-        }
-        if (max_price != null) {
-            spec = spec.and(ContractSpecification.lessPrice(max_price));
-        }
-
-        return contractService.findAll(spec);
+    @DeleteMapping("/contract/{cont_id}")
+    @Transactional
+    public ResponseEntity<?> deleteById(@PathVariable("cont_id") Integer cont_id) {
+        contractService.deleteById(cont_id);
+        return ResponseEntity.ok(new MessageResponse(
+                cont_id + " 번 계약 삭제 완료"));
     }
 }
