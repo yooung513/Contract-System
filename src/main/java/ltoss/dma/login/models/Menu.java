@@ -37,4 +37,11 @@ public class Menu {
     @JsonIgnore
     @OneToMany(mappedBy = "menu", cascade = CascadeType.REMOVE)
     private Set<PrivilegeMenu> privilegeMenu = new HashSet<>();
+
+    public Menu(Integer menuId, String menuName, String menuLink, Integer printOrder) {
+        this.menuId = menuId;
+        this.menuName = menuName;
+        this.menuLink = menuLink;
+        this.printOrder = printOrder;
+    }
 }
