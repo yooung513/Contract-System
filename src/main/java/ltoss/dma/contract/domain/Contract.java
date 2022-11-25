@@ -1,10 +1,7 @@
 package ltoss.dma.contract.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.*;
 import ltoss.dma.coop.domain.Coop;
 import ltoss.dma.login.models.User;
 import ltoss.dma.price.domain.Price;
@@ -25,10 +22,12 @@ import java.time.LocalDateTime;
 @Table(name = "contract")
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
+@ToString
 public class Contract implements Serializable {
 
     @Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
+    @Column(name = "cont_id")
     private Integer cont_id;
 
     @Column(name = "cont_code", length = 20)
@@ -68,20 +67,19 @@ public class Contract implements Serializable {
     @Column(name = "editdate", updatable = false)
     private LocalDateTime editdate;
 
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
     @JoinColumn(name = "user_id")
     private User user;
 
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
     @JoinColumn(name = "price_id")
     private Price price;
 
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
     @JoinColumn(name = "coop_id")
     private Coop coop;
-
 
 }
