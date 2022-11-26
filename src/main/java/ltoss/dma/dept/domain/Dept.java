@@ -16,8 +16,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "dept")
-@EntityListeners(AuditingEntityListener.class)
-public class Dept implements Serializable {
+public class Dept {
 
     @Id
     @Column(name = "dept_code", length = 20)
