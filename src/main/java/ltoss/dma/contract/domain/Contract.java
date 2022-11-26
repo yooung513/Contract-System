@@ -80,5 +80,4 @@ public class Contract implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "coop_id")
     private Coop coop;
-
 }

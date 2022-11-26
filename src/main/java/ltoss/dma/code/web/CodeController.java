@@ -33,7 +33,7 @@ public class CodeController {
         return ResponseEntity.ok(code);
     }
 
-    @PatchMapping("/code")
+    @PutMapping("/code")
     @Transactional
     public ResponseEntity<?> updateCode(@RequestBody Code code) {
         codeService.updateCode(code);
