@@ -46,7 +46,7 @@ public class ContractController {
     }
 
     // 계약 정보 업데이트 (수정)
-    @PatchMapping("/contract/{cont_id}")
+    @PutMapping("/contract/{cont_id}")
     @Transactional
     public ResponseEntity<?> updateContract(@RequestBody UpdateContract updateContract) {
         Optional<Contract> contract = contractRepository.findById(updateContract.getCont_id());

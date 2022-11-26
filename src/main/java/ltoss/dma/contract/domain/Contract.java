@@ -22,7 +22,6 @@ import java.time.LocalDateTime;
 @Table(name = "contract")
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-@ToString
 public class Contract implements Serializable {
 
     @Id

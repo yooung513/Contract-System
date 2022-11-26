@@ -2,27 +2,19 @@ package ltoss.dma.dashboard.repository;
 
 import lombok.Data;
 
-import java.time.LocalDate;
-import java.util.List;
+import java.math.BigDecimal;
 
 @Data
 public class DashboardDto {
+    private String sortation;
+    private BigDecimal week;
 
-    private String mat_code;
+    private BigDecimal month;
 
-    private List<Integer> pricedata;
+    private BigDecimal quarter;
 
-    public DashboardDto(){
-
-    }
-
-    public DashboardDto(LocalDate date, String mat_code){
-        this.mat_code = mat_code;
-        this.pricedata = pricedata;
-    }
-
-    public DashboardDto(String mat_code, List<Integer> pricedata){
-        this.mat_code = mat_code;
-        this.pricedata = pricedata;
+    public DashboardDto(BigDecimal price) {
+        this.sortation = "최대값";
+        this.week = price.max(price);
     }
 }
