@@ -111,6 +111,7 @@ public class WebSecurityConfig /*extends WebSecurityConfigurerAdapter*/ { // 1st
                 .antMatchers("/privilegemenu/**").permitAll()
                 .antMatchers("/privilege/**").permitAll()
                 .antMatchers("/code/**").permitAll()
+                .antMatchers("/dept/**").permitAll()
                 .antMatchers("/dashboard/**").permitAll()
                 .anyRequest().authenticated();
 
