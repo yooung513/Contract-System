@@ -37,7 +37,7 @@ public class DeptController {
     @PutMapping("/dept")
     @Transactional
     public ResponseEntity<?> updateCode(@RequestBody Dept dept) {
-        deptService.updateDept(dept);
+        deptService.save(dept);
         return ResponseEntity.ok(new MessageResponse(dept.getDeptCode() + " 부서 수정 완료"));
     }
 
