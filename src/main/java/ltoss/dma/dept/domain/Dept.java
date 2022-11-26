@@ -18,7 +18,6 @@ import java.util.Set;
 @AllArgsConstructor
 @Table(name = "dept")
 public class Dept {
-
     @Id
     @Column(name = "dept_code", length = 20)
     @Size(max = 20)
@@ -27,17 +26,4 @@ public class Dept {
     @Column(name = "dept_name", length = 45)
     @Size(max = 45)
     private String deptName;
-
-    @Column(name = "dept_level")
-    private Integer deptLevel;
-
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "upper_dept_code")
-    private Dept dept;
-
-    @JsonIgnore
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "dept")
-    private Set<Dept> deptSet = new HashSet<>();
-
 }

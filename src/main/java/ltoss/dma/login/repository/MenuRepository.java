@@ -13,7 +13,7 @@ import java.util.Set;
 @Repository
 public interface MenuRepository extends JpaRepository<Menu, Integer> {
     @Query(nativeQuery = true,
-    value = "select m.menu_id, m.menu_name, m.menu_link, m.print_order from menu as m where m.menu_id in (:menuIds)")
+    value = "select m.menu_id, m.menu_name, m.menu_link, m.print_order from menu as m where m.menu_id in (:menuIds) order by print_order")
     List<Menu> findByIds(@Param("menuIds") Set<Integer> menuIds);
 
     @Modifying
