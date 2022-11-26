@@ -1,10 +1,13 @@
 package ltoss.dma.coop.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.Getter;
+import ltoss.dma.contract.domain.Contract;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -47,4 +50,8 @@ public class Coop implements Serializable {
 
     @Column(name = "remark", length = 512)
     private String remark;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "coop", cascade = CascadeType.PERSIST)
+    private Set<Contract> contracts = new HashSet<>();
 }

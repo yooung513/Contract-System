@@ -1,34 +1,30 @@
 package ltoss.dma.price.service;
 
-import antlr.StringUtils;
 import lombok.RequiredArgsConstructor;
 import ltoss.dma.price.domain.Price;
 import ltoss.dma.price.repository.JpaPriceRepository;
-import org.springframework.data.jpa.domain.Specification;
+import ltoss.dma.price.repository.JpaPriceDto;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.transaction.Transactional;
-import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class PriceService {
 
-    private final JpaPriceRepository JpaPriceRepository;
+    private final JpaPriceRepository jpaPriceRepository;
 
     public Price save(Price price) {
-        return JpaPriceRepository.save(price);
+        return jpaPriceRepository.save(price);
     }
 
     public List<Price> findAll() {
-        return JpaPriceRepository.findAll();
+        return jpaPriceRepository.findAll();
     }
 
     public List<Price> findByDateBetween(
@@ -38,8 +34,18 @@ public class PriceService {
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)LocalDate endDate){
         System.out.println("s startDate = " + startDate);
         System.out.println("s endDate = " + endDate);
-        return JpaPriceRepository.findByDateBetween(startDate,endDate);
+        return jpaPriceRepository.findByDateBetween(startDate,endDate);
     }
+
+//*JpaRepository에 jpql문으로 조회하는 메소드를 findPrice에 주입 하여 리턴//
+    public List<JpaPriceDto> findPrice(String mat_code){
+
+        return  jpaPriceRepository.findByPrice(mat_code);
+    }
+
+
+
+
 }
 
 

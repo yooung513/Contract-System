@@ -9,7 +9,7 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
-public class UpdateRequest {
+public class UpdateContract {
     @NotBlank
     private Integer cont_id;
 
