@@ -22,7 +22,6 @@ import java.time.LocalDateTime;
 @Table(name = "contract")
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-@ToString
 public class Contract implements Serializable {
 
     @Id
@@ -81,5 +80,4 @@ public class Contract implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "coop_id")
     private Coop coop;
-
 }

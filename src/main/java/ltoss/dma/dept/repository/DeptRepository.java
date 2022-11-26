@@ -6,4 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface DeptRepository extends JpaRepository<Dept, String> {
+
+    void deleteByDeptCode(String dept_code);
+
 }
