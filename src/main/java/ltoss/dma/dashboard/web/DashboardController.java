@@ -21,8 +21,6 @@ public class DashboardController {
     DashboardService dashboardService;
     DashboardDto dashboardDto;
 
-
-
     @GetMapping("/dashboard")
     public ResponseEntity<?> getDashboardInfo() {
         return new ResponseEntity<>("ok", HttpStatus.OK);
