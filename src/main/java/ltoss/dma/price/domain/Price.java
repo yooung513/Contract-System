@@ -27,7 +27,7 @@ import java.util.Set;
                         columns = {
                                 @ColumnResult(name = "price", type = BigDecimal.class),
                                 @ColumnResult(name = "date", type = LocalDate.class),
-                                @ColumnResult(name = "matCode", type = String.class)
+                                @ColumnResult(name = "mat_code", type = String.class)
                         }
                 )
         }
@@ -38,7 +38,7 @@ import java.util.Set;
 @Entity
 @Table(name = "price",
         uniqueConstraints = {
-                @UniqueConstraint(columnNames = {"date","mat_code"})
+                @UniqueConstraint(columnNames = {"date", "mat_code"})
         })
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
@@ -59,12 +59,13 @@ public class Price implements Serializable {
 
     @Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
-    private Integer price_id;
+    @Column(name = "price_id")
+    private Integer priceId;
 
     private LocalDate date;
 
     @Column(name = "mat_code", length = 20)
-    private String mat_code;
+    private String matCode;
 
     @Column(name = "price", precision = 10, scale = 2)
     private BigDecimal price;
@@ -79,14 +80,14 @@ public class Price implements Serializable {
     private BigDecimal stock;
 
     @Column(name = "reg_code", length = 5)
-    private String reg_code;
+    private String regCode;
 
     @Column(name = "register", length = 45)
     private String register;
 
     @CreatedDate
     @Column(name = "reg_date", updatable = false)
-    private LocalDateTime reg_date;
+    private LocalDateTime regDate;
 
     @JsonIgnore
     @OneToMany(mappedBy = "price", cascade = CascadeType.PERSIST)
