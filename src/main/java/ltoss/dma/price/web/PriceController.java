@@ -2,50 +2,72 @@ package ltoss.dma.price.web;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import ltoss.dma.login.payload.response.MessageResponse;
 import ltoss.dma.price.domain.Price;
-import ltoss.dma.price.repository.JpaPriceDto;
+import ltoss.dma.price.repository.PeriodicalPrice;
 import ltoss.dma.price.service.PriceService;
-import org.springframework.data.domain.Pageable;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
+@CrossOrigin("*")
 @RestController
 @RequiredArgsConstructor
 public class PriceController {
 
     private final PriceService priceService;
 
-    @PostMapping("/price")
-    public ResponseEntity<HttpStatus> save(@RequestBody Price price) {
+    /**
+     * 가격 정보 하나를 저장한다.
+     * 이기수 2022.11.27(수정)
+     * @param price
+     * @return ResponseEntity
+     */
+    @PostMapping("/price/save")
+    public ResponseEntity<?> save(@RequestBody Price price) {
         priceService.save(price);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return ResponseEntity.ok(new MessageResponse("가격 데이터를 성공적으로 저장했습니다."));
     }
 
-    @PostMapping  ("/price/find")
-    public List<Price> findAll(){
-        return priceService.findAll();
+    /**
+     * 모든 가격 정보를 가져온다.
+     * @return ResponseEntity
+     */
+    @GetMapping  ("/price/all")
+    public ResponseEntity<?> findAll(){
+        List<Price> prices = priceService.findAll();
+        return new ResponseEntity<>(prices, HttpStatus.OK);
     }
+
+    /**
+     * 시작일, 종료일에 해당하는 가격 데이터를 반환한다.
+     * 박남길, 이다영 2022.11.25, 이기수 2022.11.27(수정)
+     * @param periodicalPrice
+     * @return ResponseEntity
+     */
     @PostMapping("/price/findByDateBetween")
-    public List<Price> findByDateBetween(
-            @RequestParam("startDate")
-            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)LocalDate startDate,
-            @RequestParam("endDate")
-            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)LocalDate endDate) {
-        System.out.println("s startDate = " + startDate);
-        System.out.println("s endDate = " + endDate);
-        return priceService.findByDateBetween(startDate, endDate);
+    public ResponseEntity<?> findByDateBetween(@RequestBody PeriodicalPrice periodicalPrice) {
+        List<Price> prices = priceService.findByDateBetween(periodicalPrice.getStartDate(), periodicalPrice.getEndDate());
+        return new ResponseEntity<>(prices, HttpStatus.OK);
 
     }
-    @PostMapping("/price/Coop") //* 현재 날짜 기준으로 31,30 일 상관없이 30개만 자재(mat_code = mat01,mat02) 가격 가져오기//
-    public ResponseEntity<?> findPrice(String mat_code){
-        List<JpaPriceDto> price = priceService.findPrice(mat_code);
-        return new ResponseEntity<>(price,HttpStatus.OK);
+
+    /** 현재 날짜 기준 최근 30일간의 자재(mat_code = mat01,mat02) 가격 데이터를 반환한다.
+     * 박남길 2022.11.25(최초), 이기수 2022.11.27(수정)
+     * @param matCode
+     * @return
+     * {
+     *     "name": "2022-11-27",
+     *     "copper": 7991.00
+     * }
+     */
+    @GetMapping("/price/{matCode}")
+    public ResponseEntity<?> findPrice(@PathVariable String matCode){
+        List<Map> price = priceService.findPrice(matCode);
+        return new ResponseEntity<>(price, HttpStatus.OK);
     }
 }

@@ -36,6 +36,8 @@ public class MenuService {
 
     /**
      * 권한에 따른 메뉴를 가져온다.
+     * 여러 권한을 가지면서 메뉴가 중복되는 경우 메뉴 중복을 배제한다.
+     * 또 printOrder 오름차순에 따라 정렬하여 메뉴를 반환한다.
      * @return
      */
     public List<Menu> getMenuByRoles(ArrayList<ERole> privilegeName) {
@@ -45,7 +47,7 @@ public class MenuService {
         // 권한에 해당하는 메뉴를 얻는다.
         List<PrivilegeMenu> privilegeMenus = privilegeMenuRepository.findByPrivilegeIn(privileges);
 
-        // 메뉴 아이디에 해당하는 온전한 메뉴 객체를 얻는다.
+        // 메뉴 아이디에 해당하는 온전한 메뉴 객체를 얻는다. 권한마다 겹치는 메뉴 중복을 제거한다.
         Set<Integer> menuIds = privilegeMenus.stream().map(privilegeMenu -> privilegeMenu.getMenu().getMenuId())
                 .collect(Collectors.toSet());
 

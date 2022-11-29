@@ -19,7 +19,5 @@ public class DeptService {
 
     public List<Dept> findAll() { return deptRepository.findAll(); }
 
-    public void updateDept(Dept dept) { deptRepository.save(dept); }
-
     public void deleteByDeptCode(String dept_code) { deptRepository.deleteByDeptCode(dept_code); }
 }
