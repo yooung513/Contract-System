@@ -5,6 +5,7 @@ import ltoss.dma.code.domain.Code;
 import ltoss.dma.code.repository.CodeRepository;
 import ltoss.dma.dashboard.domain.Dashboard;
 import ltoss.dma.dashboard.repository.DashboardRepository;
+import ltoss.dma.dashboard.repository.DashboardSummaryResponse;
 import ltoss.dma.dashboard.repository.JpaDashboardDto;
 import org.springframework.stereotype.Service;
 
@@ -67,4 +68,12 @@ public class DashboardService {
         return null;
     }
 
+    /**
+     * 기준 주, 월, 분기별 가격 요약 데이터를 조회한다.
+     * 이기수 2022.11.29
+     * @return
+     */
+    public List<DashboardSummaryResponse> getDashboardSummary(String matCode) {
+        return dashboardRepository.getDashboardSummary(matCode);
+    }
 }

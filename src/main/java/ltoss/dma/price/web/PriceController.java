@@ -2,6 +2,7 @@ package ltoss.dma.price.web;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import ltoss.dma.code.domain.Code;
 import ltoss.dma.login.payload.response.MessageResponse;
 import ltoss.dma.price.domain.Price;
 import ltoss.dma.price.repository.PeriodicalPrice;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Slf4j
 @CrossOrigin("*")
@@ -69,5 +71,15 @@ public class PriceController {
     public ResponseEntity<?> findPrice(@PathVariable String matCode){
         List<Map> price = priceService.findPrice(matCode);
         return new ResponseEntity<>(price, HttpStatus.OK);
+    }
+
+    /**
+     * 가격 데이터가 잇는 원자재의 종류를 조회한다.
+     * 이기수 2022.11.29
+     */
+    @GetMapping("/price/kind")
+    public ResponseEntity<?> findKindOfPrice() {
+        Set<Code> result = priceService.findKindOfPrice();
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

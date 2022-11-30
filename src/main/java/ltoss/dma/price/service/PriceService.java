@@ -13,6 +13,7 @@ import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -63,58 +64,14 @@ public class PriceService {
     }
 
 
-
-
+    /**
+     * 가격 데이터가 잇는 원자재의 종류를 조회한다.
+     * 이기수 2022.11.29
+     * @return
+     */
+    public Set<Code> findKindOfPrice() {
+        Set<String> matCodes = jpaPriceRepository.findKindOfPrice();
+        Set<Code> codes = codeRepository.findDescriptionByIds(matCodes);
+        return codes;
+    }
 }
-
-
-
-//    @Override
-//    public void update(Integer priceid, PriceUpdateDto updateParam) {
-//        Price findPrice = priceRepository.findById(priceid).orElseThrow();
-//        findPrice.setPriceid(updateParam.getPriceid());
-//        findPrice.setDate(updateParam.getDate());
-//        findPrice.setMatcode(updateParam.getMatcode());
-//        findPrice.setPrice(updateParam.getPrice());
-//        findPrice.setUpdown(updateParam.getUpdown());
-//        findPrice.setRate(updateParam.getRate());
-//        findPrice.setStock(updateParam.getStock());
-//        findPrice.setRegcode(updateParam.getRegcode());
-//        findPrice.setRegister(updateParam.getRegister());
-//        findPrice.setRegdate(updateParam.getRegdate());
-//    }
-//
-//    @Override
-//    public Optional<Price> findById(Integer id) {
-//        return Optional.ofNullable(matprice.get(id));
-//    }
-
-//    @Override
-//    public List<Price> findPrice(PriceSearchCond cond) {
-//        LocalDate date = cond.getDate();
-//        String matcode = cond.getMatcode();
-//        return matprice.values().stream()
-//                .filter(price -> {
-//                    if (!isEmpty())
-//                        }
-//    }
-//
-//                    if (ObjectUtils.isEmpty(date)) {
-//                        return true;
-//                    }
-//                    return price.getDate().equals(date);
-//                }).filter(price -> {
-//                    if (matcode == null) {
-//                        return true;
-//                    }
-//                    return price.getMatcode() == matcode;
-//                })
-//                .collect(Collectors.toList());
-//    }
-//
-//    public void clearMatPrice() {
-//        matprice.clear();
-//    }
-//
-//}
-

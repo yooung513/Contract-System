@@ -44,4 +44,21 @@ public interface DashboardRepository extends JpaRepository<Dashboard, Integer>{
                     "    AND a.date BETWEEN DATE_FORMAT(NOW()-INTERVAL 30 DAY, '%Y%m%d') AND NOW(); "
     )
     List<JpaDashboardDto> findByPrice(@Param("mat_code") String mat_code);
+
+
+    /**
+     * 기준 주, 월, 분기별 가격 요약 데이터를 조회한다.
+     * 이기수 2022.11.29
+     * @param matCode
+     * @return
+     */
+    @Query(nativeQuery = true,
+            value = " select sortation " +
+                    "      , week as week " +
+                    "      , month as month " +
+                    "      , quarter as quarter " +
+                    "  from v_dashboard_info" +
+                    " where mat_code = :mat_code "
+    )
+    List<DashboardSummaryResponse> getDashboardSummary(@Param("mat_code") String matCode);
 }

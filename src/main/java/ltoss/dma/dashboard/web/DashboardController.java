@@ -3,6 +3,7 @@ package ltoss.dma.dashboard.web;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import ltoss.dma.dashboard.domain.Dashboard;
+import ltoss.dma.dashboard.repository.DashboardSummaryResponse;
 import ltoss.dma.dashboard.service.DashboardService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,5 +39,17 @@ public class DashboardController {
     public ResponseEntity<?> findPrice(@PathVariable("mat_code") String mat_code) {
         List<Map> price = dashboardService.findPrice(mat_code);
         return new ResponseEntity<>(price, HttpStatus.OK);
+    }
+
+    /**
+     * 기준 주, 월, 분기별 가격 요약 데이터를 조회한다.
+     * 이기수 2022.11.29
+     * @param matCode
+     * @return ResponseEntity
+     */
+    @GetMapping("/dashboard/summary/{mat_code}")
+    public ResponseEntity<?> getDashboardSummary(@PathVariable("mat_code") String matCode) {
+        List<DashboardSummaryResponse> summary = dashboardService.getDashboardSummary(matCode);
+        return new ResponseEntity<>(summary, HttpStatus.OK);
     }
 }
