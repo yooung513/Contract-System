@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 
 public interface JpaPriceRepository extends JpaRepository<Price, Long> {
@@ -35,6 +36,13 @@ public interface JpaPriceRepository extends JpaRepository<Price, Long> {
                     " ORDER BY p.date DESC limit 30")
     List<JpaPriceDto> findByPrice(@Param("matCode") String matCode); //*파라미터 바인딩 mat_code //
 
+    /**
+     * 가격 데이터가 잇는 원자재의 종류를 조회한다.
+     * 이기수 2022.11.29
+     */
+    @Query(nativeQuery = true,
+            value = "select distinct mat_code from price")
+    Set<String> findKindOfPrice();
 }
 
 
