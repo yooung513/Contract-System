@@ -1,8 +1,15 @@
 package ltoss.dma.contract.payload;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
+import ltoss.dma.coop.domain.Coop;
+import ltoss.dma.login.models.User;
+import ltoss.dma.price.domain.Price;
 
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -37,12 +44,18 @@ public class UpdateContract {
     @NotBlank
     private String remark;
 
-    @NotBlank
-    private Long user_id;
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    @NotBlank
-    private Integer coop_id;
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "price_id")
+    private Price price;
 
-    @NotBlank
-    private Integer price_id;
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "coop_id")
+    private Coop coop;
 }

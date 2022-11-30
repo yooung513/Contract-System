@@ -64,9 +64,9 @@ public class ContractController {
                 updateContract.getCont_status(),
                 updateContract.getMat_code(),
                 updateContract.getRemark(),
-                updateContract.getUser_id(),
-                updateContract.getCoop_id(),
-                updateContract.getPrice_id()
+                updateContract.getUser().getUserId(),
+                updateContract.getCoop().getCoop_id(),
+                updateContract.getPrice().getPriceId()
         );
         return ResponseEntity.ok(new MessageResponse(
                 updateContract.getCont_id() + " 번 계약 정보 수정 완료"));
