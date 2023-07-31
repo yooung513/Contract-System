@@ -2,10 +2,12 @@
 
 <span>
   <img src="https://img.shields.io/badge/Java-007396?style=flat&logo=OpenJDK&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white"/>
   <img src="https://img.shields.io/badge/SpringBoot-6DB33F?style=flat&logo=springboot&logoColor=white"/>
   <img src="https://img.shields.io/badge/IntelliJ-000000?style=flat&logo=intellijidea&logoColor=white"/>
   <img src="https://img.shields.io/badge/MySQL-4479A1?style=flat&logo=mysql&logoColor=white"/>
   <img src="https://img.shields.io/badge/MariaDB-003545?style=flat&logo=mariadb&logoColor=white"/>
+  <img src="https://img.shields.io/badge/AWS-232F3E?style=flat&logo=amazonaws&logoColor=white"/>
   <img src="https://img.shields.io/badge/GitHub-181717?style=flat&logo=github&logoColor=white"/>
 </span>
 <br>
@@ -23,3 +25,6 @@
   > 전쟁, 자원의 무기화, 법 제정 등과 같은 원자재 공급과 관련된 많은 이슈가 발생하고 있습니다.  
   이러한 원자재의 가격 변동은 수익의 변동까지 영향을 주고 있기 때문에 원자재의 가격을 관리하고, 이에 따른 계약 실적을 관리하면 수익을 극대화 할 수 있지 않을까? 하는 생각으로 프로젝트를 기획했습니다.
 
+<br>
+
+## 
