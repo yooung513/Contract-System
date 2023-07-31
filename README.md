@@ -1,4 +1,4 @@
-<img width="920" alt="image" src="https://github.com/yooung513/dma_Contract-Program/assets/106363495/ae5c499a-aef4-4db0-95ce-4ed498e0a860">
+<img width="904" alt="image" src="https://github.com/yooung513/dma_Contract-Program/assets/106363495/33aaf17d-4486-4fdd-8f82-abe5cdf784bb">
 <br>
 <span>
   <img src="https://img.shields.io/badge/Java-007396?style=flat&logo=OpenJDK&logoColor=white"/>
