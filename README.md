@@ -46,6 +46,8 @@
 <br>
 
 ## 📄　ERD
+<img width="919" alt="image" src="https://github.com/yooung513/dma_Contract-Program/assets/106363495/6a2c7ef8-bebc-4c56-9907-71e39828bb32">
+<br>
 <br>
 
 ## 💡　주요 기능
