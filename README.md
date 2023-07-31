@@ -1,5 +1,5 @@
-![main](https://github.com/yooung513/dma_Contract-System/assets/106363495/f555dd21-452f-48b9-bb45-bdf7e7fc7f91)
-
+<img width="920" alt="image" src="https://github.com/yooung513/dma_Contract-Program/assets/106363495/ae5c499a-aef4-4db0-95ce-4ed498e0a860">
+<br>
 <span>
   <img src="https://img.shields.io/badge/Java-007396?style=flat&logo=OpenJDK&logoColor=white"/>
   <img src="https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white"/>
