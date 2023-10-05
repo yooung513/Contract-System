@@ -74,5 +74,7 @@ Thumbs.db
 
 
 # Folder
-/gradle
-/src
+gradle/
+src/test
+src/main/generated
+src/main/resources
